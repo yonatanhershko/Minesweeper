@@ -13,10 +13,12 @@ body{
 .head-line{
     font-size: 24px;
     margin-top: 50px;
+    display: flex;
+   
 }
 
 .Lives{
-    margin-right: 30%;
+    margin-right: auto;
 
 }
 
@@ -26,8 +28,8 @@ body{
 }
 
 .timer{
-    margin-left: 30%;
-
+   text-align: center;
+    margin-left: auto;
 }
 
 .new-game:hover{
@@ -63,4 +65,22 @@ table td:hover{
 .hiddin{
     background-color: #CCA152;;
     color: transparent;
+}
+
+button {
+    background-color:#F6923D;
+    color: #ffdda9;
+    font-weight: bold;
+    width: 70px ;
+    height: 30px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 5%;
+    transition: transform 0.3s ease-in-out;
+}
+
+button:hover{
+    background-color: rgb(252, 164, 105);
+    cursor: pointer;
+    transform: translateY(-5px);
 }

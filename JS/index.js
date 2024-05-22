@@ -1,4 +1,5 @@
 
+///Still working on it
 
 
 /// objects
@@ -8,29 +9,33 @@ const EMPTY = 'X'
 const happyFace = '🙂'
 const sadFace = '😵'
 const deadFace = '☠️'
+const WinFace = '✌️'
 var heartIcons
 
 
 //global
 var gBoard
-var gLevel
+var gLevel = 4
 var gBombsAround
 var gLives
+var removeLayers
 
 
 //timers and randoms
 // var timerInterval
-var gCurrTimer
+var gStartTime
 var newGameIcon
-var timerInterval
+var gTimerInterval
+var gTimerFirstClick = true
 
 
 onInit()
 function onInit() {
-    gLevel = 4
+    gLevel 
     gLives = 3
     gBoard = buildBoard()
     renderBoard(gBoard)
+    resetTimer()
     newGame()
 
 }
@@ -77,32 +82,36 @@ function renderBoard(board) {
 
 // conect the click to the function//
 function cellClicked(elCell, cellI, cellJ) {
-    startTimer()
+    if (gTimerFirstClick) {
+        startTimer()
+        gTimerFirstClick = false
+    }
 
     var removeLayer = document.querySelector('[data-i="' + cellI + '"][data-j="' + cellJ + '"]')
-    removeLayer.classList.remove('hiddin')
+     removeLayers = removeLayer.classList.remove('hiddin')
 
     var minesNear = document.querySelector('[data-i="' + cellI + '"][data-j="' + cellJ + '"]')
     var mineCount = setMinesNegsCount(cellI, cellJ)
 
     newGameIcon = document.querySelector('.new-game')
-    gCurrTimer = document.querySelector('timer')
+    gStartTime = document.querySelector('timer')
 
 
     if (gBoard[cellI][cellJ] === BOMB) {
         gLives--
         // console.log(gLives,'nums');
         updateLivesDisplay()
-        if (gLives > 0) {
+        if (gLives > 2) {
             ChangeFace()
         }
-        else if (gLives === 0) {
+        else if (gLives <= 0) {
             gameOver()
             console.log('game over')
         }
     } else if (gBoard[cellI][cellJ] === EMPTY) {
         minesNear.innerText = mineCount
     }
+    
 }
 
 function setMinesNegsCount(cellI, cellJ) {
@@ -117,40 +126,5 @@ function setMinesNegsCount(cellI, cellJ) {
     }
     // console.log('great', gBombsAround);
     return gBombsAround
-}
-
-function gameOver() {
-    clearInterval(timerInterval)
-    newGameIcon.innerText = deadFace
-}
-
-function newGame() {
-    heartIcons.innerText = '❤️❤️❤️'
-    newGameIcon.innerText = happyFace
-    clearInterval(timerInterval)
-}
-
-function updateLivesDisplay() {
-    heartIcons = document.querySelector('.Lives');
-    if (gLives === 3) {
-        heartIcons.innerText = '❤️❤️❤️'
-    } else if (gLives === 2) {
-        heartIcons.innerText = '❤️❤️'
-
-    } else if (gLives === 1) {
-        heartIcons.innerText = '❤️'
-    } else if (gLives === 0) {
-        heartIcons.innerText = '🌀🌀🌀'
-    }
-}
-
-function ChangeFace() {
-    setTimeout(() => {
-        newGameIcon.innerText = sadFace
-    }, 100)
-    setTimeout(() => {
-        newGameIcon.innerText = happyFace
-    }, 2000)
-
 }
 

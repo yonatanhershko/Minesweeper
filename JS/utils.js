@@ -1,14 +1,4 @@
 
-// function copyMat(mat) {
-//     var newMat = []
-//     for (var i = 0; i < mat.length; i++) {
-//         newMat[i] = []
-//         for (var j = 0; j < mat[0].length; j++) {
-//             newMat[i][j] = mat[i][j]
-//         }
-//     }
-//     return newMat
-// }
 
 function countNegs(cellI, cellJ, mat) {
     var negsCount = 0
@@ -45,14 +35,20 @@ function getNum() {
 // }
 
 function startTimer() {
-    var seconds = 0;
-    var timerDisplay = document.querySelector('.timer')
-    timerInterval = setInterval(function() {
-        seconds++;
-        var minutes = Math.floor(seconds / 60)
-        var remainingSeconds = seconds % 60
-        var displayMinutes = minutes < 10 ? '0' + minutes : minutes
-        var displaySeconds = remainingSeconds < 10 ? '0' + remainingSeconds : remainingSeconds
-        timerDisplay.textContent = displayMinutes + ':' + displaySeconds
-    }, 1000);
+    gStartTime = Date.now();
+    gTimerInterval = setInterval(() => {
+        var elapsedTime = Date.now() - gStartTime;
+        var minutes = Math.floor(elapsedTime / 60000);
+        var seconds = Math.floor((elapsedTime % 60000) / 1000);
+        var formattedTime = minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+        var elSpan = document.querySelector('.timer');
+        elSpan.innerText = formattedTime;
+    }, 1000); 
+}
+
+function resetTimer() {
+    gTimerFirstClick = true
+    clearInterval(gTimerInterval)
+    var elSpan = document.querySelector('.timer')
+    elSpan.innerText = '0.00'
 }

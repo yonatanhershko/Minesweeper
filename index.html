@@ -10,6 +10,12 @@
 
 <body onload="onInit()">
     <h1> Welcome To The Amazing Minesweeper</h1>
+    <h2>Choose Youre Level</h2>
+    <div class="btn-dif-container">
+        <button data-size="4" onclick="chooseLevelSize(this)">EASY</button>
+        <button data-size="8" onclick="chooseLevelSize(this)">MEDIUM</button>
+        <button data-size="12" onclick="chooseLevelSize(this)">HARD</button>
+    </div>
     <div class="head-line">
         <span class="Lives">❤️❤️❤️</span>
         <span onclick="onInit(this)" class="new-game">🙂</span>
@@ -37,6 +43,7 @@
     </div>
 
     <script src="JS/utils.js"></script>
+    <script src="JS/gamasetup.js"></script>
     <script src="JS/index.js"></script>
 </body>
 
