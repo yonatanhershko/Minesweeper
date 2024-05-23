@@ -5,10 +5,10 @@
 }
 
 body{
-    background-image: url(IMG/bg2.jpeg);
+    background-image: url(./background.jpeg);
     background-size: cover; 
     background-repeat: no-repeat;
-    background-color: #252525;
+    background-color: #ebebeb;
     text-align: center;
     color:  #252525;
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
