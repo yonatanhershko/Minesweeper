@@ -9,8 +9,8 @@
 </head>
 
 <body onload="onInit()">
-    <h1> Welcome To The Amazing Minesweeper</h1>
-    <h2>Choose Youre Level</h2>
+    <h1>Help SpongeBob and Squidward deliver all the pizza</h1>
+    <h2>Choose Your Level</h2>
     <div class="btn-dif-container">
         <button data-size="4" onclick="chooseLevelSize(this)">EASY</button>
         <button data-size="8" onclick="chooseLevelSize(this)">MEDIUM</button>
@@ -18,31 +18,26 @@
     </div>
     <div class="head-line">
         <span class="Lives">❤️❤️❤️</span>
-        <span onclick="onInit(this)" class="new-game">🙂</span>
-        <span class="timer">...</span>
-    </div>
+        <span onclick="onInit(this)" class="new-game"><img src="IMG/spongebob-squidward copy.gif" /></span>
+        <span class="timer"></span>
 
-    <div>
         <span class="timer"></span>
     </div>
 
     <div class="around-table">
         <table>
-
             <tbody class="table">
-
             </tbody>
-
-
-
         </table>
     </div>
-
+    <div class="bottom"><span>Score: </span><span class="score">XXX</span> </div>
+    <div class="bottom"><span>Best Score: </span><span class="best-score">XXX</span> </div>
     <div>
         <h3>Yonatan Hershko's Game</h3>
     </div>
 
     <script src="JS/utils.js"></script>
+    <script src="JS/gVariables.js"></script>
     <script src="JS/gamasetup.js"></script>
     <script src="JS/index.js"></script>
 </body>

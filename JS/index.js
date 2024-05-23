@@ -1,58 +1,46 @@
 
-///Still working on it
 
-
-/// objects
-const FLAG = '🏳️'
-const BOMB = '💣'
-const EMPTY = 'X'
-const happyFace = '🙂'
-const sadFace = '😵'
-const deadFace = '☠️'
-const WinFace = '✌️'
-var heartIcons
-
-
-//global
-var gBoard
-var gLevel = 4
-var gBombsAround
-var gLives
-var removeLayers
-
-
-//timers and randoms
-// var timerInterval
-var gStartTime
-var newGameIcon
-var gTimerInterval
-var gTimerFirstClick = true
-
-
-onInit()
 function onInit() {
-    gLevel 
+    gLevel
+    gGameOver = false
+    gIsFirstClick = true
     gLives = 3
+    gBestScore = 0
+    gCountFlag = 0
     gBoard = buildBoard()
     renderBoard(gBoard)
     resetTimer()
     newGame()
-
 }
 
-// console.table(buildBoard());
 function buildBoard() {
     var board = []
+    gCount = 0
+    var numBombs = getNumBombsLevel(gLevel)
+
     for (var i = 0; i < gLevel; i++) {
-        board.push([])
+        board.push([]);
         for (var j = 0; j < gLevel; j++) {
             board[i][j] = EMPTY
-            board[i][j] = (Math.random() > 0.9) ? BOMB : EMPTY
         }
     }
 
-    board[3][2] = BOMB
-    board[1][3] = BOMB
+    for (var k = 0; k < numBombs;) {
+        var randI = getRandomInt(0, gLevel)
+        var randJ = getRandomInt(0, gLevel)
+        if (board[randI][randJ] !== BOMB) {
+            board[randI][randJ] = BOMB
+            k++
+            gCountFlag++
+        }
+    }
+    for (var i = 0; i < gLevel; i++) {
+        for (var j = 0; j < gLevel; j++) {
+            if (board[i][j] !== BOMB) {
+                gCount++
+            }
+        }
+    }
     return board
 }
 
@@ -64,9 +52,10 @@ function renderBoard(board) {
         for (var j = 0; j < board[0].length; j++) {
             var cell = board[i][j]
             var className = cell
-            strHTML += `<td class="hiddin"
+            strHTML += `<td class="hidden"
             class="${className}"
                             onclick="cellClicked(this,${i},${j})"
+                            oncontextmenu="onRightClickCell(event,${i},${j})"
                             data-i="${i}" data-j="${j}">
                             ${cell}
                         </td>`
@@ -74,34 +63,55 @@ function renderBoard(board) {
         strHTML += '</tr>'
     }
 
-
     var elBoard = document.querySelector('.table')
     elBoard.innerHTML = strHTML
-
 }
 
-// conect the click to the function//
-function cellClicked(elCell, cellI, cellJ) {
-    if (gTimerFirstClick) {
-        startTimer()
-        gTimerFirstClick = false
+function onRightClickCell(event, cellI, cellJ) {
+    if (gGameOver) return
+    event.preventDefault()
+    var clickFlag = document.querySelector('[data-i="' + cellI + '"][data-j="' + cellJ + '"]')
+
+    if (isFlag) {
+        clickFlag.classList.add('isFlagged')
+        if (gBoard[cellI][cellJ] === BOMB) {/// conect the bomb to the flag 
+            gCountFlag--
+            console.log('work', gCountFlag)
+        }
+    } else {
+        clickFlag.classList.remove('isFlagged')
+    } isFlag = !isFlag
+
+    if (gCount === 0 && gCountFlag === 0) {
+        Victory()
     }
+    return false
+}
+
+function cellClicked(elCell, cellI, cellJ) {
+    if (gGameOver) return
 
     var removeLayer = document.querySelector('[data-i="' + cellI + '"][data-j="' + cellJ + '"]')
-     removeLayers = removeLayer.classList.remove('hiddin')
+    if (removeLayer.classList.contains('hidden')) {
+        removeLayer.classList.remove('hidden')
+    } else {
+        return
+    }/// won't repeat using hidden layer 
 
     var minesNear = document.querySelector('[data-i="' + cellI + '"][data-j="' + cellJ + '"]')
     var mineCount = setMinesNegsCount(cellI, cellJ)
 
-    newGameIcon = document.querySelector('.new-game')
-    gStartTime = document.querySelector('timer')
+    gNewGameIcon = document.querySelector('.new-game')
 
+    if (gIsFirstClick) {
+        gIsFirstClick = false
+        startTimer()
+    }
 
     if (gBoard[cellI][cellJ] === BOMB) {
         gLives--
-        // console.log(gLives,'nums');
         updateLivesDisplay()
-        if (gLives > 2) {
+        if (gLives > 0) {
             ChangeFace()
         }
         else if (gLives <= 0) {
@@ -109,9 +119,13 @@ function cellClicked(elCell, cellI, cellJ) {
             console.log('game over')
         }
     } else if (gBoard[cellI][cellJ] === EMPTY) {
+        score(1)
+        gCount--
         minesNear.innerText = mineCount
     }
-    
+    if (gCount === 0 && gCountFlag === 0) {
+        Victory()
+    }/// theres 2 for 2 case of winning 
 }
 
 function setMinesNegsCount(cellI, cellJ) {
@@ -124,7 +138,9 @@ function setMinesNegsCount(cellI, cellJ) {
             if (gBoard[i][j] === BOMB) gBombsAround++
         }
     }
-    // console.log('great', gBombsAround);
     return gBombsAround
 }
+
+
+
 

@@ -1,38 +1,50 @@
 
+heartIcons = document.querySelector('.Lives')
+var currNum = document.querySelector('.best-score')
+
+var bestCurrScore = {
+    score: 0,
+}
 
 function chooseLevelSize(elBtn) {
     var size = +elBtn.dataset.size
     gLevel = size
+    bestCurrScore.score = 0
+    currNum.innerText = 0
     onInit()
 }
 
 function gameOver() {
+    playSound()
+    gGameOver = true
     resetTimer()
-    newGameIcon.innerText = deadFace
+    gNewGameIcon.innerHTML = deadFace
 }
 
-function isGameOver() {
-    return gLives > 2
+function ChangeFace() {
+    setTimeout(() => {
+        gNewGameIcon.innerHTML = sadFace
+    }, 100)
+    setTimeout(() => {
+        gNewGameIcon.innerHTML = happyFace
+    }, 1000)
 }
 
 function newGame() {
     heartIcons.innerText = '❤️❤️❤️'
-    newGameIcon.innerText = happyFace
+    gNewGameIcon.innerHTML = happyFace
+    gRestScore.innerText = 0
     resetTimer()
 }
 
 function Victory() {
-    for (var i = 0; i < gLevel; i++) {
-        for (var j = 0; j < gLevel; j++)
-            if (gBoard[i][j] !== BOMB && gBoard[i][j] !== removeLayers) {
-                newGameIcon.innerText = WinFace
-                resetTimer()
-            }
-}
+    console.log('win');
+    gNewGameIcon.innerHTML = WinFace
+    gGameOver = true
+    resetTimer()
 }
 
 function updateLivesDisplay() {
-    heartIcons = document.querySelector('.Lives');
     if (gLives === 3) {
         heartIcons.innerText = '❤️❤️❤️'
     } else if (gLives === 2) {
@@ -45,15 +57,55 @@ function updateLivesDisplay() {
     }
 }
 
-function ChangeFace() {
-    if (!isGameOver()){
-    setTimeout(() => {
-        newGameIcon.innerText = sadFace
-    }, 100)
-    setTimeout(() => {
-        newGameIcon.innerText = happyFace
-    }, 2000)
+function getNumBombsLevel(level) {
+    switch (level) {
+        case 4:
+            return 3
+        case 8:
+            return 14
+        case 12:
+            return 32
+        default:
+            return 2
     }
 }
+
+function score(diff) {
+    gBestScore += diff
+    gRestScore = document.querySelector('.score')
+    gRestScore.innerText = gBestScore
+    saveBestScore()
+}
+
+function saveBestScore() {
+    if (gBestScore > bestCurrScore.score) {
+        bestCurrScore.score = gBestScore
+    }
+    currNum.innerText = bestCurrScore.score
+}
+
+// function replaceBombs() {
+//     if (!gIsFirstClick ){//replace bombs still working on it
+//         console.log('work')
+//         for (var k = 0; k < numBombs;) {
+//             var randI = getRandomInt(0, gLevel)
+//             var randJ = getRandomInt(0, gLevel)
+//             if (board[randI][randJ] !== BOMB) {
+//                 board[randI][randJ] = BOMB
+//                 k++
+//                 gCountFlag++
+//                 // console.log(gCountFlag, 'flag');
+//             }
+//         }
+//         for (var i = 0; i < gLevel; i++) {
+//             for (var j = 0; j < gLevel; j++) {
+//                 if (board[i][j] !== BOMB) {
+//                     gCount++
+//                     // console.log(gCount,'hh')
+//                 }
+//             }
+//         }
+//         } return board
+// }
 
 
