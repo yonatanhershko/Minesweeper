@@ -16,8 +16,7 @@ function onInit() {
 function buildBoard() {
     var board = []
     gCount = 0
-    var numBombs = getNumBombsLevel(gLevel)
-
+    // var numBombs = getNumBombsLevel(gLevel);
     for (var i = 0; i < gLevel; i++) {
         board.push([]);
         for (var j = 0; j < gLevel; j++) {
@@ -25,22 +24,24 @@ function buildBoard() {
         }
     }
 
-    for (var k = 0; k < numBombs;) {
-        var randI = getRandomInt(0, gLevel)
-        var randJ = getRandomInt(0, gLevel)
-        if (board[randI][randJ] !== BOMB) {
-            board[randI][randJ] = BOMB
-            k++
-            gCountFlag++
-        }
-    }
-    for (var i = 0; i < gLevel; i++) {
-        for (var j = 0; j < gLevel; j++) {
-            if (board[i][j] !== BOMB) {
-                gCount++
-            }
-        }
-    }
+    // for (var k = 0; k < numBombs;) {
+    //     var randI = getRandomInt(0, gLevel)
+    //     var randJ = getRandomInt(0, gLevel)
+    //     if (board[randI][randJ] !== BOMB) {
+    //         board[randI][randJ] = BOMB
+    //         k++
+    //         gCountFlag++
+    //     }
+    // }
+    // for (var i = 0; i < gLevel; i++) {
+    //     for (var j = 0; j < gLevel; j++) {
+    //         if (board[i][j] !== BOMB) {
+    //             gCount++
+    //         }
+    //     }
+    // }
+
+
     return board
 }
 
@@ -82,7 +83,7 @@ function onRightClickCell(event, cellI, cellJ) {
         clickFlag.classList.remove('isFlagged')
     } isFlag = !isFlag
 
-    if (gCount === 0 && gCountFlag === 0) {
+    if (gCount === 1 && gCountFlag === 0) {
         Victory()
     }
     return false
@@ -102,10 +103,24 @@ function cellClicked(elCell, cellI, cellJ) {
     var mineCount = setMinesNegsCount(cellI, cellJ)
 
     gNewGameIcon = document.querySelector('.new-game')
-
     if (gIsFirstClick) {
+
         gIsFirstClick = false
         startTimer()
+        gBoard = buildBoard()
+        replaceBombs(gBoard, cellI, cellJ)
+        renderBoard(gBoard)
+        if (gBoard[cellI][cellJ] !== BOMB) {
+            mineCount = setMinesNegsCount(cellI, cellJ)/// count at the first click the bombs/mines
+            gBoard[cellI][cellJ] = mineCount
+            renderBoard(gBoard)// and render it
+            var firstClickedCellRemove = document.querySelector('[data-i="' + cellI + '"][data-j="' + cellJ + '"]')
+            firstClickedCellRemove.classList.remove('hidden')
+
+        }
+
+
+        score(1)
     }
 
     if (gBoard[cellI][cellJ] === BOMB) {
@@ -121,9 +136,12 @@ function cellClicked(elCell, cellI, cellJ) {
     } else if (gBoard[cellI][cellJ] === EMPTY) {
         score(1)
         gCount--
+        // console.log(gCount,'ttt');
         minesNear.innerText = mineCount
+
+
     }
-    if (gCount === 0 && gCountFlag === 0) {
+    if (gCount === 1 && gCountFlag === 0) {
         Victory()
     }/// theres 2 for 2 case of winning 
 }
@@ -140,7 +158,4 @@ function setMinesNegsCount(cellI, cellJ) {
     }
     return gBombsAround
 }
-
-
-
 

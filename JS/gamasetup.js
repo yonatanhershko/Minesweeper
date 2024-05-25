@@ -84,28 +84,34 @@ function saveBestScore() {
     currNum.innerText = bestCurrScore.score
 }
 
-// function replaceBombs() {
-//     if (!gIsFirstClick ){//replace bombs still working on it
-//         console.log('work')
-//         for (var k = 0; k < numBombs;) {
-//             var randI = getRandomInt(0, gLevel)
-//             var randJ = getRandomInt(0, gLevel)
-//             if (board[randI][randJ] !== BOMB) {
-//                 board[randI][randJ] = BOMB
-//                 k++
-//                 gCountFlag++
-//                 // console.log(gCountFlag, 'flag');
-//             }
-//         }
-//         for (var i = 0; i < gLevel; i++) {
-//             for (var j = 0; j < gLevel; j++) {
-//                 if (board[i][j] !== BOMB) {
-//                     gCount++
-//                     // console.log(gCount,'hh')
-//                 }
-//             }
-//         }
-//         } return board
-// }
+function toggleDarkMode() {
+    var body = document.body
+    body.classList.toggle('darkbt')
+    var tableNight = document.querySelector('table')
+    tableNight.classList.toggle('darktable')
+    // console.log('great change mode')
+}
+
+function replaceBombs(board, firstClickedI, firstClickedJ) {
+    var numBombs = getNumBombsLevel(gLevel)
+    for (var k = 0; k < numBombs; ) {
+        var randI = getRandomInt(0, gLevel)
+        var randJ = getRandomInt(0, gLevel)
+        if (randI !== firstClickedI || randJ !== firstClickedJ) {//place the bombs only after the first click
+            if (board[randI][randJ] !== BOMB) {
+                board[randI][randJ] = BOMB
+                k++
+                gCountFlag++
+            }
+        }
+    }
+    for (var i = 0; i < gLevel; i++) {
+        for (var j = 0; j < gLevel; j++) {
+            if (board[i][j] !== BOMB) {
+                gCount++
+            }
+        }
+    }
+}
 
 

@@ -1,7 +1,7 @@
 
 
 /// objects
-const BOMB = '☠️'
+var BOMB = '☠️'
 const EMPTY = '🍕'
 var happyFace = '<img src="IMG/spongebob-squidward copy.gif">'
 var sadFace = '<img src="IMG/sadspong.gif">'
@@ -21,6 +21,7 @@ var gCount = 0
 var gCountFlag = 0
 var gBestScore 
 var gRestScore 
+
 
 
 //timers and randoms
