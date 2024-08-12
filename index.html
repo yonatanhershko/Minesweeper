@@ -6,22 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/index.css">
     <title>My First Sprint</title>
+    <style>
+        .darkbt {
+            transition: all 0.8s ease;
+            background-image: url(./css/nightmode.jpg) !important;
+            background-color: #1a1a1a;
+            color: #bfc3e4;
+        }
+    </style>
 </head>
 
-<body onload="onInit()">
+<body onload="onInit()" style=" background-image: url(./css/background.jpeg);">
     <h1>Help SpongeBob and Squidward deliver all the pizza</h1>
     <h2>Choose Your Level</h2>
     <div class="btn-dif-container">
         <button data-size="4" onclick="chooseLevelSize(this)">EASY</button>
         <button data-size="8" onclick="chooseLevelSize(this)">MEDIUM</button>
         <button data-size="12" onclick="chooseLevelSize(this)">HARD</button>
-        <button onclick="toggleDarkMode()" >D-MODE </button>
+        <button onclick="toggleDarkMode()">D-MODE </button>
     </div>
     <div class="head-line">
         <span class="Lives">❤️❤️❤️</span>
         <span onclick="onInit(this)" class="new-game"><img src="IMG/spongebob-squidward copy.gif" /></span>
         <span class="timer"></span>
-        
+
     </div>
 
     <div class="around-table">
@@ -36,10 +44,10 @@
         <h3>Yonatan Hershko's Game</h3>
     </div>
 
-    <script src="js/utils.js"></script>
-    <script src="js/gVariables.js"></script>
-    <script src="js/gamasetup.js"></script>
-    <script src="js/index.js"></script>
+    <script src="./js/utils.js"></script>
+    <script src="./js/gVariables.js"></script>
+    <script src="./js/gamasetup.js"></script>
+    <script src="./js/index.js"></script>
 </body>
 
 </html>

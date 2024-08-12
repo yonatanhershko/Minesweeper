@@ -5,7 +5,7 @@
 
 body {
     transition: all 0.8s ease;
-    background-image: url(./background.jpeg);
+    /* background-image: url(./background.jpeg); */
     background-size: cover;
     background-repeat: no-repeat;
     background-color: #ebebeb;
@@ -142,12 +142,7 @@ button:hover {
     cursor: default;
 }
 
-.darkbt {
-    transition: all 0.8s ease;
-    background-image: url(./nightmode.jpg);
-    background-color: #1a1a1a;
-    color: #bfc3e4;
-}
+
 
 .darktable {
     transition: all 0.5s ease;
