@@ -40,7 +40,7 @@ function getRandomInt(min, max) {
 }
 
 function playSound() {
-	const sound = new Audio('IMG/worlds-smallest-violin.mp3')
+	const sound = new Audio('img/worlds-smallest-violin.mp3')
 	sound.play()
 }
 

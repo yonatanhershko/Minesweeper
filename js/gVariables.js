@@ -3,10 +3,10 @@
 /// objects
 var BOMB = '☠️'
 const EMPTY = '🍕'
-var happyFace = '<img src="IMG/spongebob-squidward copy.gif">'
-var sadFace = '<img src="IMG/sadspong.gif">'
-var deadFace = '<img src="IMG/MRKviolin.gif">'
-var WinFace = '<img src="IMG/spongebob-dance.gif"/>'
+var happyFace = '<img src="img/spongebob-squidward copy.gif">'
+var sadFace = '<img src="img/sadspong.gif">'
+var deadFace = '<img src="img/MRKviolin.gif">'
+var WinFace = '<img src="img/spongebob-dance.gif"/>'
 var heartIcons
 
 
